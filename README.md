@@ -1,4 +1,10 @@
-# create-svelte
+# Full stack dev app demo
+
+**tech stack**: Sveltekit, Prisma, Postgres
+
+---
+
+## create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
 
@@ -12,6 +18,8 @@ npm init svelte
 
 # create a new project in my-app
 npm init svelte my-app
+#or in current directory
+npm init svelte . 
 ```
 
 ## Developing
