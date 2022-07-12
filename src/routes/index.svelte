@@ -1,5 +1,5 @@
 <script>
-  import TodoItem from "../lib/TodoItem.svelte";
+  import TodoItem from "$lib/TodoItem.svelte";
 </script>
 <h1>Todos</h1>
 
