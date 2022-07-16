@@ -33,7 +33,7 @@
   <form class="new" action="/todos.json" method="POST">
     <input
       type="text"
-      name="text"
+      name="text-input"
       aria-label="Add a Todo"
       placeholder="+ type to add a todo"
     />

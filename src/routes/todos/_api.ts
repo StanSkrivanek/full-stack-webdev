@@ -3,32 +3,43 @@ import type { RequestEvent } from "@sveltejs/kit";
 //TODO: Persist todos in database
 let todos: Todo[] = [];
 
-export const api = ({ request }: RequestEvent, todo?: Todo) => {
+export const api = (request: RequestEvent, data?: Record<string, unknown>) => {
   let body = {} as any;
   let status = 500;
-  console.log("api", request.method);
+  console.log("api", request.request.method);
 
-  switch (request.method.toUpperCase()) {
+  switch (request.request.method.toUpperCase()) {
     case "GET":
       body = todos;
       status = 200;
       break;
 
     case "POST":
-      todos.push(todo!);
-      body = todo;
+      todos.push(data as Todo);
+      body = data;
       status = 201;
       break;
-      
-    case "DELETE":
+
+    case "PATCH":
+      todos = todos.map((t) => {
+        if (t.uid === request.params.uid) {
+          t.text = data!.text as string;
+        }
+        return t;
+      });
       status = 200;
-      todos = todos.filter((t) => t.uid !== t!.uid);
+      break;
+
+    case "DELETE":
+      todos = todos.filter((t) => t.uid !== t.uid);
+      status = 200;
       break;
 
     default:
       break;
   }
-  if (request.method.toUpperCase() !== "GET") {
+
+  if (request.request.method.toUpperCase() !== "GET") {
     return {
       status: 303,
       headers: {

@@ -7,17 +7,17 @@
     <input type="hidden" name="done" value="" id="" />
     <button class="toggle" aria-label="Mark done/not done" />
   </form>
-  <form class="text" action="" method="" >
-    <input type="text" value={todo.text}/>
+  <form class="text" action="/todos/{todo.uid}.json?_method=patch" method="post" >
+    <input type="text" name="text-input" value={todo.text}/>
     <button class="save" aria-label="Save todo" />
   </form>
   <form action="/todos/{todo.uid}.json?_method=delete" method="post">
     <button class="delete" aria-label="Delete todo" />
   </form>
 </div>
-<!-- <pre>
+<pre>
   {JSON.stringify(todo, null, 2)}
-</pre> -->
+</pre>
 <style>
   .todo {
     display: grid;
