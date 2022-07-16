@@ -1,11 +1,12 @@
 <script lang="ts">
   export let todo: Todo;
+  const done = todo.done // variable with identical name as CSS class is used to style the element 
 </script>
 
-<div class="todo">
-  <form action="" method="">
-    <input type="hidden" name="done" value="" id="" />
-    <button class="toggle" aria-label="Mark done/not done" />
+<div class="todo" class:done>
+  <form action="/todos/{todo.uid}.json?_method=patch" method="post">
+    <input type="hidden" name="done" value={todo.done ? "": "true"} id="" />
+    <button class="toggle" aria-label="Mark todo as {todo.done ? "not done": "done"}" />
   </form>
   <form class="text" action="/todos/{todo.uid}.json?_method=patch" method="post" >
     <input type="text" name="text-input" value={todo.text}/>
