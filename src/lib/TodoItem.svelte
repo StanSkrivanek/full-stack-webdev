@@ -11,11 +11,13 @@
     <input type="text" value={todo.text}/>
     <button class="save" aria-label="Save todo" />
   </form>
-  <form action="" method="">
+  <form action="/todos/{todo.uid}.json?_method=delete" method="post">
     <button class="delete" aria-label="Delete todo" />
   </form>
 </div>
-
+<!-- <pre>
+  {JSON.stringify(todo, null, 2)}
+</pre> -->
 <style>
   .todo {
     display: grid;
