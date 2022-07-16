@@ -1,0 +1,10 @@
+{
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": false,
+  "typescript.inlayHints.enumMemberValues.enabled": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": true,
+  "typescript.inlayHints.parameterTypes.enabled": false,
+  "typescript.referencesCodeLens.showOnAllFunctions": true,
+  "js/ts.implicitProjectConfig.target": "ES2022",
+  "javascript.inlayHints.variableTypes.suppressWhenTypeMatchesName": false,
+  "typescript.format.insertSpaceAfterConstructor": true
+}

@@ -1,23 +1,28 @@
 import type { RequestHandler } from "@sveltejs/kit";
 
+//TODO: Persist todos in database
+let todos: Todo[] = [];
+
 export const get: RequestHandler = () => {
   return {
     status: 200,
-    body: {
-      todos: [
-        {
-          id: 1,
-          title: "Learn Svelte",
+    body: todos,
+  };
+};
 
-          completed: false,
-        },
-        {
-          id: 2,
-          title: "Learn TypeScript",
+export const post: RequestHandler<{}, FormData> = async ({ request }) => {
+  const formData = await request.formData();
+  // const value = formData.get("text") as string;
+  todos.push({
+    createdAt: new Date(),
+    text: formData.get("text") as string,
+    done: false,
+  });
 
-          completed: false,
-        },
-      ],
+  return {
+    status: 303,
+    headers: {
+      Location: `/`,
     },
   };
 };
