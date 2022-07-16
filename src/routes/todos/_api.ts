@@ -23,7 +23,8 @@ export const api = (request: RequestEvent, data?: Record<string, unknown>) => {
     case "PATCH":
       todos = todos.map((t) => {
         if (t.uid === request.params.uid) {
-          t.text = data!.text as string;
+         if(data!.text) t.text = data!.text as string;
+         else t.done = data!.done as boolean;
         }
         return t;
       });
@@ -31,7 +32,7 @@ export const api = (request: RequestEvent, data?: Record<string, unknown>) => {
       break;
 
     case "DELETE":
-      todos = todos.filter((t) => t.uid !== t.uid);
+      todos = todos.filter((t) => t.uid !== request.params.uid);
       status = 200;
       break;
 
