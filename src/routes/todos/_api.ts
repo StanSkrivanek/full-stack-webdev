@@ -23,12 +23,13 @@ export const api = (request: RequestEvent, data?: Record<string, unknown>) => {
     case "PATCH":
       todos = todos.map((t) => {
         if (t.uid === request.params.uid) {
-         if(data!.text) t.text = data!.text as string;
-         else t.done = data!.done as boolean;
+          if (data!.text) t.text = data!.text as string;
+          else t.done = data!.done as boolean;
         }
         return t;
       });
       status = 200;
+      body= todos.find((t) => t.uid === request.params.uid);
       break;
 
     case "DELETE":
@@ -40,7 +41,10 @@ export const api = (request: RequestEvent, data?: Record<string, unknown>) => {
       break;
   }
 
-  if (request.request.method.toUpperCase() !== "GET") {
+  if (
+    request.request.method.toUpperCase() !== "GET" &&
+    request.request.headers.get("accept") !== "application/json"
+  ) {
     return {
       status: 303,
       headers: {
@@ -48,6 +52,7 @@ export const api = (request: RequestEvent, data?: Record<string, unknown>) => {
       },
     };
   }
+
   return {
     status,
     body,

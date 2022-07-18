@@ -1,24 +1,49 @@
 <script lang="ts">
+  import { enhance } from "$lib/actions/form";
   export let todo: Todo;
-  const done = todo.done // variable with identical name as CSS class is used to style the element 
+  export let processDeleteTodoResult: (response: Response) => void;
+  export let processUpdateTodoResult: (response: Response) => void;
 </script>
 
-<div class="todo" class:done>
-  <form action="/todos/{todo.uid}.json?_method=patch" method="post">
-    <input type="hidden" name="done" value={todo.done ? "": "true"} id="" />
-    <button class="toggle" aria-label="Mark todo as {todo.done ? "not done": "done"}" />
+<div class="todo" class:done={todo.done}>
+  <form action="/todos/{todo.uid}.json?_method=patch" method="post" use:enhance={{ apiResult: processUpdateTodoResult }}>
+    <input
+      type="hidden"
+      name="done"
+      value={todo.done ? "" : "true"}
+      
+    />
+    <button
+      class="toggle"
+      aria-label="Mark todo as {todo.done ? 'not done' : 'done'}"
+    />
   </form>
-  <form class="text" action="/todos/{todo.uid}.json?_method=patch" method="post" >
-    <input type="text" name="text-input" value={todo.text}/>
+  <form
+    class="text"
+    action="/todos/{todo.uid}.json?_method=patch"
+    method="post"
+     use:enhance={{ apiResult: processUpdateTodoResult }}
+  >
+    <input
+      type="text"
+      name="text-input"
+      value={todo.text}
+     
+    />
     <button class="save" aria-label="Save todo" />
   </form>
-  <form action="/todos/{todo.uid}.json?_method=delete" method="post">
+  <form
+    action="/todos/{todo.uid}.json?_method=delete"
+    method="post"
+    use:enhance={{ apiResult: processDeleteTodoResult }}
+  >
     <button class="delete" aria-label="Delete todo" />
   </form>
 </div>
 <pre>
   {JSON.stringify(todo, null, 2)}
 </pre>
+
 <style>
   .todo {
     display: grid;
