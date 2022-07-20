@@ -1,39 +1,50 @@
 // we can asscess this api from both files in todos folder (index.json.ts and [uid].json.ts)
 import type { RequestEvent } from "@sveltejs/kit";
-//TODO: Persist todos in database
-let todos: Todo[] = [];
+import { PrismaClient } from "@prisma/client";
 
-export const api = (request: RequestEvent, data?: Record<string, unknown>) => {
+const prisma = new PrismaClient();
+
+export const api = async (
+  request: RequestEvent,
+  data?: Record<string, unknown>
+) => {
   let body = {} as any;
   let status = 500;
-  console.log("api", request.request.method);
+  // console.log("api", request.request.method);
 
   switch (request.request.method.toUpperCase()) {
     case "GET":
-      body = todos;
+      body = await prisma.todo.findMany();
       status = 200;
       break;
 
     case "POST":
-      todos.push(data as Todo);
-      body = data;
+      body = await prisma.todo.create({
+        data: {
+          createdAt: data?.createdAt as Date,
+          done: data?.done as boolean,
+          text: data?.text as string,
+        },
+      });
       status = 201;
       break;
 
     case "PATCH":
-      todos = todos.map((t) => {
-        if (t.uid === request.params.uid) {
-          if (data!.text) t.text = data!.text as string;
-          else t.done = data!.done as boolean;
-        }
-        return t;
+      body = await prisma.todo.update({
+        where: {
+          uid: request.params.uid,
+        },
+        data: {
+          done: data?.done as boolean,
+          text: data?.text != null ? data.text as string : undefined,
+        },
       });
       status = 200;
-      body= todos.find((t) => t.uid === request.params.uid);
+
       break;
 
     case "DELETE":
-      todos = todos.filter((t) => t.uid !== request.params.uid);
+      await prisma.todo.delete({ where: { uid: request.params.uid } });
       status = 200;
       break;
 

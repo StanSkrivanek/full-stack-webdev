@@ -5,7 +5,7 @@ export const patch: RequestHandler<{}, FormData> = async (request) => {
   const formData = await request.request.formData();
 
   return api(request, {
-    text: formData.get("text-input") as string, // "text-input" === `name` of input in form
+    text: formData.get("text") as string, // "text" === `name` of input in form
     done: (formData.get("done") as string) === "true",
   });
 };

@@ -34,13 +34,11 @@
     form.reset();
   };
 
-  const processUpdateTodoResult = async (
-    response: Response
-  ) => {
+  const processUpdateTodoResult = async (response: Response) => {
     const updatedTodo = await response.json();
-    todos = todos.map((t) =>{
-    if(t.uid === updatedTodo.uid) return updatedTodo;
-    return t;
+    todos = todos.map((t) => {
+      if (t.uid === updatedTodo.uid) return updatedTodo;
+      return t;
     });
   };
 </script>
@@ -60,7 +58,7 @@
   >
     <input
       type="text"
-      name="text-input"
+      name="text"
       aria-label="Add a Todo"
       placeholder="+ type to add a todo"
     />

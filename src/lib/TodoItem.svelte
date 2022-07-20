@@ -6,13 +6,12 @@
 </script>
 
 <div class="todo" class:done={todo.done}>
-  <form action="/todos/{todo.uid}.json?_method=patch" method="post" use:enhance={{ apiResult: processUpdateTodoResult }}>
-    <input
-      type="hidden"
-      name="done"
-      value={todo.done ? "" : "true"}
-      
-    />
+  <form
+    action="/todos/{todo.uid}.json?_method=patch"
+    method="post"
+    use:enhance={{ apiResult: processUpdateTodoResult }}
+  >
+    <input type="hidden" name="done" value={todo.done ? "" : "true"} />
     <button
       class="toggle"
       aria-label="Mark todo as {todo.done ? 'not done' : 'done'}"
@@ -22,14 +21,9 @@
     class="text"
     action="/todos/{todo.uid}.json?_method=patch"
     method="post"
-     use:enhance={{ apiResult: processUpdateTodoResult }}
+    use:enhance={{ apiResult: processUpdateTodoResult }}
   >
-    <input
-      type="text"
-      name="text-input"
-      value={todo.text}
-     
-    />
+    <input type="text" name="text" value={todo.text} />
     <button class="save" aria-label="Save todo" />
   </form>
   <form
@@ -40,10 +34,10 @@
     <button class="delete" aria-label="Delete todo" />
   </form>
 </div>
-<pre>
-  {JSON.stringify(todo, null, 2)}
-</pre>
 
+<!-- <pre>
+  {JSON.stringify(todo, null, 2)}
+</pre> -->
 <style>
   .todo {
     display: grid;

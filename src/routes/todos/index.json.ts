@@ -5,14 +5,13 @@ export const get: RequestHandler = (event) => {
   return api(event);
 };
 
-export const post: RequestHandler<{}, FormData> = async ( event ) => {
+export const post: RequestHandler<{}, FormData> = async (event) => {
   const formData = await event.request.formData();
-  
+
   return api(event, {
     // uid: `${Date.now()}`,
     createdAt: new Date(),
-    text: formData.get("text-input") as string,
+    text: formData.get("text") as string | undefined,
     done: false,
   });
 };
-
